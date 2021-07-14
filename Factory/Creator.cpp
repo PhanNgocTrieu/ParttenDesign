@@ -1,13 +1,13 @@
 #include <iostream>
 
-
 /**
  * The Product interface declares the operations that all concrete products must
  * implement.
  */
 
-class Product {
- public:
+class Product
+{
+public:
   virtual ~Product() {}
   virtual std::string Operation() const = 0;
 };
@@ -15,15 +15,19 @@ class Product {
 /**
  * Concrete Products provide various implementations of the Product interface.
  */
-class ConcreteProduct1 : public Product {
- public:
-  std::string Operation() const override {
+class ConcreteProduct1 : public Product
+{
+public:
+  std::string Operation() const override
+  {
     return "{Result of the ConcreteProduct1}";
   }
 };
-class ConcreteProduct2 : public Product {
- public:
-  std::string Operation() const override {
+class ConcreteProduct2 : public Product
+{
+public:
+  std::string Operation() const override
+  {
     return "{Result of the ConcreteProduct2}";
   }
 };
@@ -34,14 +38,15 @@ class ConcreteProduct2 : public Product {
  * implementation of this method.
  */
 
-class Creator {
+class Creator
+{
   /**
    * Note that the Creator may also provide some default implementation of the
    * factory method.
    */
- public:
+public:
   virtual ~Creator(){};
-  virtual Product* FactoryMethod() const = 0;
+  virtual Product *FactoryMethod() const = 0;
   /**
    * Also note that, despite its name, the Creator's primary responsibility is
    * not creating products. Usually, it contains some core business logic that
@@ -50,9 +55,10 @@ class Creator {
    * returning a different type of product from it.
    */
 
-  std::string SomeOperation() const {
+  std::string SomeOperation() const
+  {
     // Call the factory method to create a Product object.
-    Product* product = this->FactoryMethod();
+    Product *product = this->FactoryMethod();
     // Now, use the product.
     std::string result = "Creator: The same creator's code has just worked with " + product->Operation();
     delete product;
@@ -64,21 +70,25 @@ class Creator {
  * Concrete Creators override the factory method in order to change the
  * resulting product's type.
  */
-class ConcreteCreator1 : public Creator {
+class ConcreteCreator1 : public Creator
+{
   /**
    * Note that the signature of the method still uses the abstract product type,
    * even though the concrete product is actually returned from the method. This
    * way the Creator can stay independent of concrete product classes.
    */
- public:
-  Product* FactoryMethod() const override {
+public:
+  Product *FactoryMethod() const override
+  {
     return new ConcreteProduct1();
   }
 };
 
-class ConcreteCreator2 : public Creator {
- public:
-  Product* FactoryMethod() const override {
+class ConcreteCreator2 : public Creator
+{
+public:
+  Product *FactoryMethod() const override
+  {
     return new ConcreteProduct2();
   }
 };
@@ -88,7 +98,8 @@ class ConcreteCreator2 : public Creator {
  * its base interface. As long as the client keeps working with the creator via
  * the base interface, you can pass it any creator's subclass.
  */
-void ClientCode(const Creator& creator) {
+void ClientCode(const Creator &creator)
+{
   // ...
   std::cout << "Client: I'm not aware of the creator's class, but it still works.\n"
             << creator.SomeOperation() << std::endl;
@@ -100,13 +111,14 @@ void ClientCode(const Creator& creator) {
  * environment.
  */
 
-int main() {
+int main()
+{
   std::cout << "App: Launched with the ConcreteCreator1.\n";
-  Creator* creator = new ConcreteCreator1();
+  Creator *creator = new ConcreteCreator1();
   ClientCode(*creator);
   std::cout << std::endl;
   std::cout << "App: Launched with the ConcreteCreator2.\n";
-  Creator* creator2 = new ConcreteCreator2();
+  Creator *creator2 = new ConcreteCreator2();
   ClientCode(*creator2);
 
   delete creator;
