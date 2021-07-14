@@ -1,15 +1,16 @@
 # ParttenDesign
-# FACTORYPATTERN
+# FACTORYPATTERN (Source: https://refactoring.guru/design-patterns/factory-method)
 
-Applicability
+1) Applicability
 Use the Factory Method when you don’t know beforehand the exact types and dependencies of the objects your code should work with.
 
 The Factory Method separates product construction code from the code that actually uses the product. Therefore it’s easier to extend the product construction code independently from the rest of the code.
 
 For example, to add a new product type to the app, you’ll only need to create a new creator subclass and override the factory method in it.
 
-Use the Factory Method when you want to provide users of your library or framework with a way to extend its internal components.
 
+
+2) Use the Factory Method when you want to provide users of your library or framework with a way to extend its internal components.
 Inheritance is probably the easiest way to extend the default behavior of a library or framework. But how would the framework recognize that your subclass should be used instead of a standard component?
 
 The solution is to reduce the code that constructs components across the framework into a single factory method and let anyone override this method in addition to extending the component itself.
@@ -18,8 +19,9 @@ Let’s see how that would work. Imagine that you write an app using an open sou
 
 To achieve this, you create a subclass UIWithRoundButtons from a base framework class and override its createButton method. While this method returns Button objects in the base class, you make your subclass return RoundButton objects. Now use the UIWithRoundButtons class instead of UIFramework. And that’s about it!
 
-Use the Factory Method when you want to save system resources by reusing existing objects instead of rebuilding them each time.
 
+
+3) Use the Factory Method when you want to save system resources by reusing existing objects instead of rebuilding them each time.
 You often experience this need when dealing with large, resource-intensive objects such as database connections, file systems, and network resources.
 
 Let’s think about what has to be done to reuse an existing object:
@@ -34,7 +36,7 @@ Probably the most obvious and convenient place where this code could be placed i
 
 Therefore, you need to have a regular method capable of creating new objects as well as reusing existing ones. That sounds very much like a factory method.
 
-How to Implement
+4) How to Implement
 Make all products follow the same interface. This interface should declare methods that make sense in every product.
 
 Add an empty factory method inside the creator class. The return type of the method should match the common product interface.
@@ -53,12 +55,14 @@ For instance, imagine that you have the following hierarchy of classes: the base
 
 If, after all of the extractions, the base factory method has become empty, you can make it abstract. If there’s something left, you can make it a default behavior of the method.
 
-Pros and Cons
+5) Pros and Cons
 You avoid tight coupling between the creator and the concrete products.
 Single Responsibility Principle. You can move the product creation code into one place in the program, making the code easier to support.
 Open/Closed Principle. You can introduce new types of products into the program without breaking existing client code.
 The code may become more complicated since you need to introduce a lot of new subclasses to implement the pattern. The best case scenario is when you’re introducing the pattern into an existing hierarchy of creator classes.
-Relations with Other Patterns
+
+
+6)Relations with Other Patterns
 Many designs start by using Factory Method (less complicated and more customizable via subclasses) and evolve toward Abstract Factory, Prototype, or Builder (more flexible, but more complicated).
 
 Abstract Factory classes are often based on a set of Factory Methods, but you can also use Prototype to compose the methods on these classes.
