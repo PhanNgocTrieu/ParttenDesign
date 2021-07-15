@@ -42,6 +42,9 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "initializer_list": "cpp"
+        "initializer_list": "cpp",
+        "bit": "cpp",
+        "optional": "cpp",
+        "string_view": "cpp"
     }
 }
